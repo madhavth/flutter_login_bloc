@@ -107,7 +107,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
 
   void checkIfLoggedIn() async{
     var prefs = await SharedPreferences.getInstance();
-    var loggedIn = prefs.getInt('loginCheck'??-1);
+    var loggedIn = prefs.getInt('loginCheck'??0);
 
     print('loggedIn main is $loggedIn');
     if(loggedIn == 1)
@@ -115,10 +115,11 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
          loginBloc.add(LoginEvent.LOGGEDIN);
       }
 
-    else if(loggedIn == 0)
+    else
       {
         loginBloc.add(LoginEvent.LOGGEDOUT);
       }
+
   }
 }
 
