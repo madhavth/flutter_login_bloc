@@ -17,7 +17,7 @@ class LoginScreen extends StatelessWidget {
             Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(colors: <Color>[
-                    Colors.blue, Colors.deepPurple
+                    Colors.blue, Colors.black
                   ]
                   )
                 ),
@@ -64,7 +64,7 @@ class _LoginFormState extends State<LoginForm> {
         else if (state is LoginFailed)
           {
             _showLoading.dismiss();
-            showFlushBar('Login Failed, set password empty, but not username ty',Duration(seconds: 3));
+            showFlushBar('Login Failed',Duration(seconds: 2));
           }
 
         else if (state is LoginChecking)
@@ -82,8 +82,8 @@ class _LoginFormState extends State<LoginForm> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              formField('Username', textController1,false),
-              formField('Password', textController2,true),
+              formField('Enter Username here', textController1,false,'Username'),
+              formField('Enter Password here', textController2,true,'Password'),
               SizedBox(height: 20,),
               MaterialButton(onPressed: () {
                 checkLogin();
@@ -106,7 +106,7 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
-  Widget formField(hint,controller,obscure) {
+  Widget formField(hint,controller,obscure,labelText) {
     return Container(
       width: MediaQuery.of(context).size.width/2,
       child: TextFormField(
@@ -114,9 +114,14 @@ class _LoginFormState extends State<LoginForm> {
           decorationColor:Colors.black12,
           color: Colors.white
         ),
+
         controller: controller,
         obscureText: obscure,
         decoration: InputDecoration(
+          labelStyle: TextStyle(
+            color: Colors.amber
+          ),
+          labelText: labelText,
           hintStyle: TextStyle(
             color: Colors.white.withOpacity(0.3)
           ),

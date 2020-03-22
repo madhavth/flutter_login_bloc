@@ -19,9 +19,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
         //tori check logic
         try{
-            if(event.username !="" && event.password == "")
+          yield LoginChecking();
+
+          if(event.username !="")
               {
-                yield LoginChecking();
                 await Future.delayed(Duration(seconds: 1));
                 final prefs = await SharedPreferences.getInstance();
                 prefs.setInt(Const.LOGINCHECK, 1);

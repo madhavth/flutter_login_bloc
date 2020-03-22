@@ -84,7 +84,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
     return Container(
       decoration: BoxDecoration(
-        gradient: RadialGradient(colors: <Color>[
+        gradient: RadialGradient(
+          focalRadius: 5,
+          colors: <Color>[
           Colors.blue,Colors.amber
         ],
         ),
