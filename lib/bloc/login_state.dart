@@ -15,3 +15,5 @@ class LoginFailed extends LoginState {}
 class LoginSuccess extends LoginState {}
 
 class InitialLoginState extends LoginState {}
+
+class LoginChecking extends LoginState {}

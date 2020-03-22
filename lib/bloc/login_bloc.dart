@@ -21,6 +21,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         try{
             if(event.username !="" && event.password == "")
               {
+                yield LoginChecking();
+                await Future.delayed(Duration(seconds: 1));
                 final prefs = await SharedPreferences.getInstance();
                 prefs.setInt(Const.LOGINCHECK, 1);
                 prefs.setString(Const.USERNAME,event.username);

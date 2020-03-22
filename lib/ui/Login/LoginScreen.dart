@@ -25,6 +25,7 @@ class _LoginFormState extends State<LoginForm> {
 
   final textController1 = TextEditingController();
   final textController2 = TextEditingController();
+  final _showLoading = Flushbar(message: 'Checking..');
 
   @override
   Widget build(BuildContext context) {
@@ -32,19 +33,25 @@ class _LoginFormState extends State<LoginForm> {
       listener: (BuildContext context, state) {
         if(state is LoginSuccess)
           {
+            _showLoading.dismiss();
             showFlushBar('Logged In',Duration(seconds: 2));
             context.bloc<AuthenticationBloc>().add(AppLoggedIn());
           }
 
         else if (state is LoginFailed)
           {
+            _showLoading.dismiss();
             showFlushBar('Login Failed, set password empty, but not username ty',Duration(seconds: 3));
           }
 
-        else
+        else if (state is LoginChecking)
           {
-
+            _showLoading.show(context);
           }
+
+        else {
+           _showLoading.dismiss();
+        }
     },
       child: Center(
         child: Container(
@@ -73,11 +80,17 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   Widget formField(hint,controller,obscure) {
-    return TextFormField(
-      controller: controller,
-      obscureText: obscure,
-      decoration: InputDecoration(
-        hintText: hint,
+    return Container(
+      width: MediaQuery.of(context).size.width/2,
+      child: TextFormField(
+        controller: controller,
+        obscureText: obscure,
+        decoration: InputDecoration(
+          hintStyle: TextStyle(
+            color: Colors.black38
+          ),
+          hintText: hint,
+        ),
       ),
     );
   }
