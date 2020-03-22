@@ -11,7 +11,30 @@ class LoginScreen extends StatelessWidget {
         create: (BuildContext context) {
           return LoginBloc();
         },
-        child: LoginForm());
+        child: Stack(
+          children: <Widget>[
+//            myImage(context),
+            Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(colors: <Color>[
+                    Colors.blue, Colors.deepPurple
+                  ]
+                  )
+                ),
+                child: LoginForm()),
+          ],
+        ));
+  }
+
+  Widget myImage(context)
+  {
+    return Image(
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height, 
+      image: AssetImage('assets/login.jpg'),
+      fit: BoxFit.cover,
+      color: Colors.black,
+    );
   }
 }
 
@@ -65,10 +88,14 @@ class _LoginFormState extends State<LoginForm> {
               MaterialButton(onPressed: () {
                 checkLogin();
               },
+                focusColor: Colors.amberAccent.withOpacity(0.2),
                 highlightColor: Colors.amber,
-                child: Text('Login'),
+                child: Text('Login', style: TextStyle(color: Colors.white),),
                 shape: RoundedRectangleBorder(
-                  side: BorderSide(),
+                  side: BorderSide(
+                    color: Colors.white,
+                    style: BorderStyle.solid,
+                  ),
                   borderRadius: BorderRadius.circular(12)
                 ),
               )
@@ -83,11 +110,15 @@ class _LoginFormState extends State<LoginForm> {
     return Container(
       width: MediaQuery.of(context).size.width/2,
       child: TextFormField(
+        style: TextStyle(
+          decorationColor:Colors.black12,
+          color: Colors.white
+        ),
         controller: controller,
         obscureText: obscure,
         decoration: InputDecoration(
           hintStyle: TextStyle(
-            color: Colors.black38
+            color: Colors.white.withOpacity(0.3)
           ),
           hintText: hint,
         ),

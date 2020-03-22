@@ -82,17 +82,25 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
 
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          CircularProgressIndicator(
-            strokeWidth: 12,
-            backgroundColor: Colors.amber,
-          ),
-          SizedBox(height: 30,),
-          Text('Loading',style: TextStyle(fontSize: 30,color: Colors.amberAccent),),
+    return Container(
+      decoration: BoxDecoration(
+        gradient: RadialGradient(colors: <Color>[
+          Colors.blue,Colors.amber
         ],
+        ),
+      ),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            CircularProgressIndicator(
+              strokeWidth: 12,
+              backgroundColor: Colors.amber,
+            ),
+            SizedBox(height: 30,),
+            Text('Loading',style: TextStyle(fontSize: 30,color: Colors.amberAccent),),
+          ],
+        ),
       ),
     );
   }

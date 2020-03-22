@@ -1,9 +1,9 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_login_demo/bloc/authentication_bloc.dart';
 import 'package:flutter_login_demo/bloc/authentication_event.dart';
-import 'package:flutter_login_demo/bloc/authentication_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../const.dart';
@@ -22,33 +22,72 @@ Future<String> getUserName() async
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          FutureBuilder(
-            builder: (context, snapshot){
-              return Text('Welcome, ${snapshot.data}',style: TextStyle(fontSize: 32, color: Colors.amberAccent),);
-            },
-            initialData: Text('Loading..'),
-            future: getUserName(),
-          ),
-          MaterialButton(
-            child: Text('Logout'),
-            onPressed: ()
-            {
-              logOutAndClear();
-            },
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-              side: BorderSide()
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(colors: <Color>[Colors.blue,Colors.black54],
+        )
+      ),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            typeWriter(),
+            FutureBuilder(
+              builder: (context, snapshot){
+                if(snapshot.data!=null)
+                return ColorizeAnimatedTextKit(
+                  isRepeatingAnimation: true,
+                  speed: Duration(
+                    seconds: 2
+                  ),
+                  text: [snapshot.data],
+                  textStyle: TextStyle(
+                      fontSize: 50,
+                      color: Colors.amber
+                  ), colors: <Color>[Colors.amber,Colors.blue],
+                  textAlign: TextAlign.start,
+                  alignment: AlignmentDirectional.topStart,
+                );
+                else
+                  return Text('Loading...');
+              },
+              future: getUserName(),
             ),
-            highlightColor: Colors.blue,
-          )
-        ],
+            SizedBox(height: 20,),
+            MaterialButton(
+              child: Text('Logout',style: TextStyle(color: Colors.white),),
+              onPressed: ()
+              {
+                logOutAndClear();
+              },
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+                side: BorderSide(
+                  color: Colors.white,
+                  style: BorderStyle.solid
+                )
+              ),
+              highlightColor: Colors.amber,
+            )
+          ],
+        ),
       ),
     );
   }
+  
+  Widget typeWriter()
+  {
+    return TyperAnimatedTextKit(
+      speed: Duration(milliseconds: 50),
+      isRepeatingAnimation: false,
+      text: ['Welcome'],
+      textStyle: TextStyle(
+        color: Colors.amber,
+        fontSize: 70,
+      ),
+    );
+  }
+
 
   void logOutAndClear() async{
     final prefs = await SharedPreferences.getInstance();
